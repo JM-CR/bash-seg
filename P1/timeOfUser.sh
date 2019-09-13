@@ -29,3 +29,10 @@ while getopts "hu:f:" opcion; do
   esac
 done
 
+# Evaluar flags
+if [[ -n ${usuario} && -n ${archivo} ]]; then
+  read tiemposPorSesion < <(filtrarLogConUsuario ${usuario} ${archivo})
+  echo $tiemposPorSesion
+else
+  echo "To Do"
+fi
