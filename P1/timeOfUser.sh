@@ -15,10 +15,11 @@ while getopts "hu:f:" opcion; do
     ;;
     f)
       archivo=${OPTARG}
+      archivoValido ${archivo}
     ;;
     h)
       ayuda
-      exit 1
+      exit 0
     ;;
     *)
       echo "Error: Argumento inválido."
@@ -27,3 +28,4 @@ while getopts "hu:f:" opcion; do
     ;;
   esac
 done
+
