@@ -23,22 +23,7 @@ function filtrarLogConUsuario() {
   grep "${usuario}" < ${log} > logFiltrado
 
   # Verificar si aún está conectado
-  local sesionEnCurso=$(awk '{print $10}' logFiltrado | head -1)
-
-  if [[ ${sesionEnCurso} == "in" ]]; then 
-    # Calcular tiempo de sesión actual
-    local horaInicial=$(awk '{print $7}' logFiltrado | head -1)
-    local horaFinal=$(date +%T)
-    local segI=$(date -u -d "${horaInicial}:00" +"%s")
-    local segF=$(date -u -d "${horaFinal}" +"%s")
-
-    # Formato del tiempo calculado
-    if (( (${segI} - ${segF}) / 3600 > 0 )); then
-      local tiempoSesionActual=$(date -ud "0 ${segF} sec - ${segI} sec" +"%H+%M:%S")
-    else
-      local tiempoSesionActual=$(date -ud "0 ${segF} sec - ${segI} sec" +"%M:%S")
-    fi
-  fi
+  read tiempoSesionActual < <(sesionEnCurso "logFiltrado")
 
   # Filtrar tiempos por sesión
   local tiempos=$(awk '{print $10}' logFiltrado)
