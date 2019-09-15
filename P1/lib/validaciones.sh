@@ -27,7 +27,7 @@ function archivoValido() {
   fi
 
   local totalDeColumnas=$(awk '{print NF}' ${1} | sort -nu | tail -n 1)
-  if (( ${totalDeColumnas} != 10 )); then
+  if (( ${totalDeColumnas} < 10 )); then
     echo "Error: El archivo no es un log válido."
     exit 1
   fi
@@ -77,6 +77,7 @@ function convierteHora() {
     hora=${hora#"("}
     hora=${hora%")"}
     hora=${hora/"+"/":"}
+    [[ ${hora} =~ ^[0-9]: ]] && hora="0${hora}"
   else
     hora=${hora#"("}
     hora="00:${hora%")"}"
