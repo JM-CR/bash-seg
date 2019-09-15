@@ -32,7 +32,7 @@ done
 # Evaluar flags
 if [[ -n ${usuario} && -n ${archivo} ]]; then
   read tiemposPorSesion < <(filtrarLogConUsuario ${usuario} ${archivo})
-  echo $tiemposPorSesion
+  read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
 else
   echo "To Do"
 fi

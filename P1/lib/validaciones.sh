@@ -61,3 +61,26 @@ function sesionEnCurso() {
 
   echo ${tiempoSesionActual}
 }
+
+##
+# Convierte una hora a formato hh:mm:ss.
+#
+# @author Josue Mosh
+# @param ${1} Hora a convertir en formato (hh+mm:ss) ó (mm:ss)
+# @return Hora en formato hh:mm:ss
+function convierteHora() {
+  local hora=${1}
+
+  if [[ ${hora} =~ :[0-9]{2}: ]]; then
+    :
+  elif [[ ${hora} =~ "+" ]]; then
+    hora=${hora#"("}
+    hora=${hora%")"}
+    hora=${hora/"+"/":"}
+  else
+    hora=${hora#"("}
+    hora="00:${hora%")"}"
+  fi
+
+  echo ${hora}
+}

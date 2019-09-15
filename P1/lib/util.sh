@@ -37,3 +37,50 @@ function filtrarLogConUsuario() {
   # Regresar tiempos
   echo $(cat logFiltrado) && $(rm logFiltrado)
 }
+
+##
+# Calcula la suma de dos horas en formato (hh+mm:ss) ó (mm:ss).
+#
+# @author Josue Mosh
+# @param ${1} Primer hora
+# @param ${2} Segunda hora
+# @return Suma en formato hh:mm:ss
+function sumaHoras() {
+  # Convertir a formato hh:mm:ss
+  read hora_1 < <(convierteHora ${1})
+  read hora_2 < <(convierteHora ${2})
+
+  # Convertir a segundos
+  local segs_1=$(( 10#${hora_1:0:2} * 3600 + 10#${hora_1:3:2} * 60  + 10#${hora_1:6:2} ))
+  local segs_2=$(( 10#${hora_2:0:2} * 3600 + 10#${hora_2:3:2} * 60  + 10#${hora_2:6:2} ))
+
+  # Calcular tiempo
+  local total=$(( ${segs_1} + ${segs_2} ))
+  local horasT=$(( ${total} / 3600 ))
+  local minsT=$(( (${total} - ${horasT} * 3600) / 60 ))
+  local segsT=$(( ${total} - ${horasT} * 3600 - ${minsT} * 60 ))
+
+  # Formatear
+  (( ${horasT} < 10 )) && horasT="0${horasT}"
+  (( ${minsT} < 10 )) && minsT="0${minsT}"
+  (( ${segsT} < 10 )) && segsT="0${segsT}"
+
+  echo "${horasT}:${minsT}:${segsT}"
+}
+
+##
+# Calcula el tiempo total de conexión.
+#
+# @author Josue Mosh
+# @param ${1} Tiempos por sesión
+# @return Tiempo total
+function tiempoDeConexion() {
+  local tiemposPorSesion=${1}
+  local tiempoTotal="00:00:00"
+
+  for tiempoASumar in ${tiemposPorSesion}; do
+    read tiempoTotal < <(sumaHoras ${tiempoTotal} ${tiempoASumar})
+  done
+
+  echo ${tiempoTotal}
+}
