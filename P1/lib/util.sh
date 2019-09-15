@@ -72,7 +72,7 @@ function sumaHoras() {
 # Calcula el tiempo total de conexión.
 #
 # @author Josue Mosh
-# @param ${1} Tiempos por sesión
+# @param ${1} Arreglo de tiempos por sesión
 # @return Tiempo total
 function tiempoDeConexion() {
   local tiemposPorSesion=${1}
