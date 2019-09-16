@@ -46,20 +46,27 @@ function sesionEnCurso() {
 
   if [[ ${sesionActiva} == "in" ]]; then 
     # Calcular tiempo de sesión
+    local mesInicial=$(awk '{print $5}' ${log} | head -1)
+    local diaInicial=$(awk '{print $6}' ${log} | head -1)
     local horaInicial=$(awk '{print $7}' ${log} | head -1)
     local horaFinal=$(date +%T)
-    local segI=$(date -u -d "${horaInicial}:00" +"%s")
-    local segF=$(date -u -d "${horaFinal}" +"%s")
+    local segI=$(date -ud "${mesInicial} ${diaInicial} ${horaInicial}:00" +"%s")
+    local segF=$(date -ud "${horaFinal}" +"%s")
 
     # Formato del tiempo calculado
-    if (( (${segI} - ${segF}) / 3600 > 0 )); then
-      tiempoSesionActual=$(date -ud "0 ${segF} sec - ${segI} sec" +"%H+%M:%S")
+    local diferencia=$(( ${segF} - ${segI} ))
+    if (( ${diferencia} / 3600 > 0 )); then
+      tiempoEnCurso=$(date -ud "0 ${diferencia} sec" +"%H+%M:%S")
     else
-      tiempoSesionActual=$(date -ud "0 ${segF} sec - ${segI} sec" +"%M:%S")
+      tiempoEnCurso=$(date -ud "0 ${diferencia} sec" +"%M:%S")
     fi 
+
+    # Sumar horas de días anteriores
+    local horasExtra=$(( ${diferencia} / 3600 - ${tiempoEnCurso:0:2} ))
+    read tiempoEnCurso < <(sumaHoras ${tiempoEnCurso} "${horasExtra}:00:00")
   fi
 
-  echo ${tiempoSesionActual}
+  echo ${tiempoEnCurso}
 }
 
 ##

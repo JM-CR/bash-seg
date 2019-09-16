@@ -31,7 +31,7 @@ function filtrarLogConUsuario() {
 
   if [[ -n ${tiempoSesionActual} ]]; then
     sed -i "1d" logFiltrado
-    echo "(${tiempoSesionActual})" >> logFiltrado
+    echo "${tiempoSesionActual}" >> logFiltrado
   fi
 
   # Regresar tiempos
@@ -51,8 +51,20 @@ function sumaHoras() {
   read hora_2 < <(convierteHora ${2})
 
   # Convertir a segundos
-  local segs_1=$(( 10#${hora_1:0:2} * 3600 + 10#${hora_1:3:2} * 60  + 10#${hora_1:6:2} ))
-  local segs_2=$(( 10#${hora_2:0:2} * 3600 + 10#${hora_2:3:2} * 60  + 10#${hora_2:6:2} ))
+  local segs_1
+  local segs_2
+  
+  if [[ ${hora_1} =~ ^[0-9]{3}: ]]; then
+    segs_1=$(( ${hora_1:0:3}*3600 + 10#${hora_1:4:2}*60 + 10#${hora_1:7:2} ))
+  else
+    segs_1=$(( 10#${hora_1:0:2}*3600 + 10#${hora_1:3:2}*60 + 10#${hora_1:6:2} ))
+  fi
+
+  if [[ ${hora_2} =~ ^[0-9]{3}: ]]; then
+    segs_2=$(( ${hora_2:0:3}*3600 + 10#${hora_2:4:2}*60 + 10#${hora_2:7:2} ))
+  else
+    segs_2=$(( 10#${hora_2:0:2}*3600 + 10#${hora_2:3:2}*60 + 10#${hora_2:6:2} ))
+  fi
 
   # Calcular tiempo
   local total=$(( ${segs_1} + ${segs_2} ))
