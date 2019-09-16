@@ -2,6 +2,7 @@
 
 # Importar librerías
 source lib/validaciones.sh
+source lib/operaciones.sh
 source lib/util.sh
 
 argumentosValidos ${#}

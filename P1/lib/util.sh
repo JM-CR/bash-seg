@@ -35,37 +35,7 @@ function filtrarLogConUsuario() {
   fi
 
   # Regresar tiempos
-  echo $(cat logFiltrado) && $(rm logFiltrado)
-}
-
-##
-# Calcula la suma de dos horas en formato (hh+mm:ss) ó (mm:ss).
-#
-# @author Josue Mosh
-# @param ${1} Primer hora
-# @param ${2} Segunda hora
-# @return Suma en formato hh:mm:ss
-function sumaHoras() {
-  # Convertir a formato hh:mm:ss
-  read hora_1 < <(convierteHora ${1})
-  read hora_2 < <(convierteHora ${2})
-
-  # Convertir a segundos
-  read segs_1 < <(convierteASegundos ${hora_1})
-  read segs_2 < <(convierteASegundos ${hora_2})
-  
-  # Calcular tiempo
-  local total=$(( ${segs_1} + ${segs_2} ))
-  local horasT=$(( ${total} / 3600 ))
-  local minsT=$(( (${total} - ${horasT} * 3600) / 60 ))
-  local segsT=$(( ${total} - ${horasT} * 3600 - ${minsT} * 60 ))
-
-  # Formatear
-  (( ${horasT} < 10 )) && horasT="0${horasT}"
-  (( ${minsT} < 10 )) && minsT="0${minsT}"
-  (( ${segsT} < 10 )) && segsT="0${segsT}"
-
-  echo "${horasT}:${minsT}:${segsT}"
+  echo $(cat logFiltrado) && rm logFiltrado
 }
 
 ##

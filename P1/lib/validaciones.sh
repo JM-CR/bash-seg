@@ -52,9 +52,9 @@ function sesionEnCurso() {
     local horaFinal=$(date +%T)
     local segI=$(date -ud "${mesInicial} ${diaInicial} ${horaInicial}:00" +"%s")
     local segF=$(date -ud "${horaFinal}" +"%s")
+    local diferencia=$(( ${segF} - ${segI} ))
 
     # Formato del tiempo calculado
-    local diferencia=$(( ${segF} - ${segI} ))
     if (( ${diferencia} / 3600 > 0 )); then
       tiempoEnCurso=$(date -ud "0 ${diferencia} sec" +"%H+%M:%S")
     else
@@ -67,47 +67,4 @@ function sesionEnCurso() {
   fi
 
   echo ${tiempoEnCurso}
-}
-
-##
-# Convierte una hora a formato hh:mm:ss.
-#
-# @author Josue Mosh
-# @param ${1} Hora a convertir en formato (hh+mm:ss) ó (mm:ss)
-# @return Hora en formato hh:mm:ss
-function convierteHora() {
-  local hora=${1}
-
-  if [[ ${hora} =~ :[0-9]{2}: ]]; then
-    :
-  elif [[ ${hora} =~ "+" ]]; then
-    hora=${hora#"("}
-    hora=${hora%")"}
-    hora=${hora/"+"/":"}
-    [[ ${hora} =~ ^[0-9]: ]] && hora="0${hora}"
-  else
-    hora=${hora#"("}
-    hora="00:${hora%")"}"
-  fi
-
-  echo ${hora}
-}
-
-##
-# Convierte una hora en formato hh:mm:ss a segundos.
-#
-# @author Josue Mosh
-# @param ${1} Hora en formato hh:mm:ss
-# @return Tiempo en segundos
-function convierteASegundos() {
-  local hora=${1}
-  local segs
-
-  if [[ ${hora} =~ ^[0-9]{3}: ]]; then
-    segs=$(( ${hora:0:3} * 3600 + 10#${hora:4:2} * 60 + 10#${hora:7:2} ))
-  else
-    segs=$(( 10#${hora:0:2} * 3600 + 10#${hora:3:2} * 60 + 10#${hora:6:2} ))
-  fi
-
-  echo ${segs}
 }
