@@ -85,21 +85,3 @@ function convierteHora() {
 
   echo ${hora}
 }
-
-##
-# Imprime en consola a los usuario(s) con su(s) tiempo(s) de conexión.
-# 
-# @author Josue Mosh
-# @param ${1} Arreglo o usuario a imprimir
-# @param ${2} Arreglo o tiempo a imprimir
-function imprimeTiempos() {
-  local usuario=${1}
-  local tiempo=${2}
-
-  while (( ${#usuario} < 10 )); do
-    usuario="${usuario} "
-  done
-
-  echo "USUARIO    |  TIEMPO"
-  echo "${usuario} |  ${tiempo}"
-}

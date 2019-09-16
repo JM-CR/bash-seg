@@ -69,7 +69,7 @@ function sumaHoras() {
 }
 
 ##
-# Calcula el tiempo total de conexión.
+# Calcula el tiempo total de conexiones.
 #
 # @author Josue Mosh
 # @param ${1} Arreglo de tiempos por sesión
@@ -83,4 +83,22 @@ function tiempoDeConexion() {
   done
 
   echo ${tiempoTotal}
+}
+
+##
+# Imprime en consola un usuario y su tiempo de conexión.
+# 
+# @author Josue Mosh
+# @param ${1} Usuario a imprimir
+# @param ${2} Tiempo a imprimir
+function imprimeTiempo() {
+  local usuario=${1}
+  local tiempo=${2}
+
+  while (( ${#usuario} < 10 )); do
+    usuario="${usuario} "
+  done
+
+  echo "USUARIO    |  TIEMPO"
+  echo "${usuario} |  ${tiempo}"
 }

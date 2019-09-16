@@ -33,7 +33,7 @@ done
 if [[ -n ${usuario} && -n ${archivo} ]]; then
   read tiemposPorSesion < <(filtrarLogConUsuario ${usuario} ${archivo})
   read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
-  imprimeTiempos ${usuario} ${tiempoTotal}
+  imprimeTiempo ${usuario} ${tiempoTotal}
 else
   echo "To Do"
 fi
