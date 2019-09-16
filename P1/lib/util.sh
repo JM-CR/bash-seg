@@ -20,7 +20,7 @@ function filtrarLogConUsuario() {
   local log=${2}
 
   # Buscar usuario
-  grep "${usuario}" < ${log} > logFiltrado
+  grep --regexp="\b${usuario}\b" < ${log} > logFiltrado
 
   # Verificar si aún está conectado
   read tiempoSesionActual < <(sesionEnCurso "logFiltrado")
