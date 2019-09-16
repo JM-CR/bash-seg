@@ -92,3 +92,22 @@ function convierteHora() {
 
   echo ${hora}
 }
+
+##
+# Convierte una hora en formato hh:mm:ss a segundos.
+#
+# @author Josue Mosh
+# @param ${1} Hora en formato hh:mm:ss
+# @return Tiempo en segundos
+function convierteASegundos() {
+  local hora=${1}
+  local segs
+
+  if [[ ${hora} =~ ^[0-9]{3}: ]]; then
+    segs=$(( ${hora:0:3} * 3600 + 10#${hora:4:2} * 60 + 10#${hora:7:2} ))
+  else
+    segs=$(( 10#${hora:0:2} * 3600 + 10#${hora:3:2} * 60 + 10#${hora:6:2} ))
+  fi
+
+  echo ${segs}
+}
