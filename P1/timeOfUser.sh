@@ -36,5 +36,13 @@ if [[ -n ${usuario} && -n ${archivo} ]]; then
   read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
   imprimeTiempo ${usuario} ${tiempoTotal}
 else
-  echo "To Do"
+     read userArray < <(ObtenerUsuarios ${archivo})
+     for i in ${userArray[@]}
+	 do
+		 read tiemposPorSesion < <(filtrarLogConUsuario $i ${archivo})
+  		 read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
+  		 imprimeTiempo ${usuario} ${tiempoTotal}
+	 done
+
+
 fi
