@@ -39,17 +39,16 @@ function filtrarLogConUsuario() {
 }
 
 ##
-# FIltra los usuarios que esten dentro del archivo
+# Filtra los usuarios que estén dentro del archivo.
 #
 # @author Jair Hernandez
 # @param ${1} Archivo por analizar
-# @param ${2} Archivo por analizar
 # @return Arreglo de usuarios
-function ObtenerUsuarios() {
+function obtenerUsuarios() {
   local log=${1}
-  local cont=0
-  while IFS= read -r line; do user[${cont}]=${line:0:7}; cont=$((cont+1)); done < ${log}
-  echo ${user[@]}
+  local usuarios=$(awk '{print $1}' ${log} | sort -u)
+
+  echo ${usuarios}
 }
 
 ##
