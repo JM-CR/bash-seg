@@ -30,18 +30,19 @@ while getopts "hu:f:" opcion; do
   esac
 done
 
-# Evaluar flags
+# Template de salida
+echo "USUARIO   |  TIEMPO"
+
+# Casos de ejecución
 if [[ -n ${usuario} && -n ${archivo} ]]; then
   read tiemposPorSesion < <(filtrarLogConUsuario ${usuario} ${archivo})
   read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
   imprimeTiempo ${usuario} ${tiempoTotal}
 else
-     read userArray < <(obtenerUsuarios ${archivo})
-     for usuarioAMandar in ${userArray}; do
+  read userArray < <(obtenerUsuarios ${archivo})
+  for usuarioAMandar in ${userArray}; do
 	  read tiemposPorSesion < <(filtrarLogConUsuario ${usuarioAMandar} ${archivo})
-  	  read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
-       imprimeTiempo ${usuarioAMandar} ${tiempoTotal}
-     done
-
-
+  	read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
+    imprimeTiempo ${usuarioAMandar} ${tiempoTotal}
+  done
 fi

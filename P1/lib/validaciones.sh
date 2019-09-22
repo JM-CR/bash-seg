@@ -26,7 +26,7 @@ function archivoValido() {
     exit 1
   fi
 
-  local totalDeColumnas=$(awk '{print NF}' ${1} | sort -nu | tail -n 1)
+  local totalDeColumnas=$(awk '{print NF}' ${archivo} | sort -nu | tail -n 1)
   if (( ${totalDeColumnas} < 10 )); then
     echo "Error: El archivo no es un log válido."
     exit 1
@@ -41,8 +41,8 @@ function archivoValido() {
 # @return Devuelve el tiempo de sesión activa o un null
 function sesionEnCurso() {
   local log=${1}
-  local tiempoSesionActual
-  local sesionActiva=$(awk '{print $10}' ${log} | head -1)
+  local tiempoEnCurso
+  local sesionActiva=$(awk '{print $10}' ${log} | grep "in" | head -1)
 
   if [[ ${sesionActiva} == "in" ]]; then 
     # Calcular tiempo de sesión

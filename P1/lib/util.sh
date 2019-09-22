@@ -3,7 +3,7 @@
 ##
 # Muestra menú de ayuda.
 #
-# @author Josue Mosh
+# @author Bruno Valerio
 function ayuda() {
   echo "Escribir menú ayuda"
 }
@@ -30,7 +30,7 @@ function filtrarLogConUsuario() {
   echo "${tiempos}" > logFiltrado
 
   if [[ -n ${tiempoSesionActual} ]]; then
-    sed -i "1d" logFiltrado
+    sed -i "/in/d" logFiltrado
     echo "${tiempoSesionActual}" >> logFiltrado
   fi
 
@@ -78,10 +78,9 @@ function imprimeTiempo() {
   local usuario=${1}
   local tiempo=${2}
 
-  while (( ${#usuario} < 10 )); do
-    usuario="${usuario} "
+  while (( ${#usuario} < 9 )); do
+    usuario+=" "
   done
 
-  echo "USUARIO    |  TIEMPO"
   echo "${usuario} |  ${tiempo}"
 }
