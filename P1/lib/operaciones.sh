@@ -56,11 +56,11 @@ function sumaHoras() {
   read hora_2 < <(convierteHora ${2})
 
   # Convertir a segundos
-  read segs_1 < <(convierteASegundos ${hora_1})
-  read segs_2 < <(convierteASegundos ${hora_2})
+  read segs_1 < <(convierteASegundos ${hora_1} 2> /dev/null)
+  read segs_2 < <(convierteASegundos ${hora_2} 2> /dev/null)
   
   # Calcular tiempo
-  local total=$(( ${segs_1} + ${segs_2} ))
+  local total=$(( ${segs_1:-0} + ${segs_2:-0} ))
   local horasT=$(( ${total} / 3600 ))
   local minsT=$(( (${total} - ${horasT} * 3600) / 60 ))
   local segsT=$(( ${total} - ${horasT} * 3600 - ${minsT} * 60 ))

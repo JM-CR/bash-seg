@@ -42,7 +42,7 @@ function archivoValido() {
 function sesionEnCurso() {
   local log=${1}
   local tiempoEnCurso
-  local sesionActiva=$(awk '{print $10}' ${log} | grep "in" | head -1)
+  local sesionActiva=$(awk '{print $10}' ${log} | head -1)
 
   if [[ ${sesionActiva} == "in" ]]; then 
     # Calcular tiempo de sesión
