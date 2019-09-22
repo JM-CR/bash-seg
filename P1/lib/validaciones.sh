@@ -46,10 +46,9 @@ function sesionEnCurso() {
 
   if [[ ${sesionActiva} =~ "logged" ]]; then 
     # Calcular tiempo de sesión
-    echo ${sesionActiva} > temp
-    local mesInicial=$(awk '{print $5}' temp)
-    local diaInicial=$(awk '{print $6}' temp)
-    local horaInicial=$(awk '{print $7}' temp && rm temp)
+    local mesInicial=$(awk '{print $5}' <<< ${sesionActiva})
+    local diaInicial=$(awk '{print $6}' <<< ${sesionActiva})
+    local horaInicial=$(awk '{print $7}' <<< ${sesionActiva})
     local horaFinal=$(date +"%b %d %T")
     local segI=$(date -ud "${mesInicial} ${diaInicial} ${horaInicial}:00" +"%s")
     local segF=$(date -ud "${horaFinal}" +"%s")
