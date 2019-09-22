@@ -42,13 +42,14 @@ function archivoValido() {
 function sesionEnCurso() {
   local log=${1}
   local tiempoEnCurso
-  local sesionActiva=$(awk '{print $10}' ${log} | head -1)
+  local sesionActiva=$(grep --regexp="\bin\b" ${log} | head -1)
 
-  if [[ ${sesionActiva} == "in" ]]; then 
+  if [[ ${sesionActiva} =~ "logged" ]]; then 
     # Calcular tiempo de sesión
-    local mesInicial=$(awk '{print $5}' ${log} | head -1)
-    local diaInicial=$(awk '{print $6}' ${log} | head -1)
-    local horaInicial=$(awk '{print $7}' ${log} | head -1)
+    echo ${sesionActiva} > temp
+    local mesInicial=$(awk '{print $5}' temp)
+    local diaInicial=$(awk '{print $6}' temp)
+    local horaInicial=$(awk '{print $7}' temp && rm temp)
     local horaFinal=$(date +%T)
     local segI=$(date -ud "${mesInicial} ${diaInicial} ${horaInicial}:00" +"%s")
     local segF=$(date -ud "${horaFinal}" +"%s")
