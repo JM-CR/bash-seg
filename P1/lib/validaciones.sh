@@ -50,7 +50,7 @@ function sesionEnCurso() {
     local mesInicial=$(awk '{print $5}' temp)
     local diaInicial=$(awk '{print $6}' temp)
     local horaInicial=$(awk '{print $7}' temp && rm temp)
-    local horaFinal=$(date +%T)
+    local horaFinal=$(date +"%b %d %T")
     local segI=$(date -ud "${mesInicial} ${diaInicial} ${horaInicial}:00" +"%s")
     local segF=$(date -ud "${horaFinal}" +"%s")
     local diferencia=$(( ${segF} - ${segI} ))
@@ -63,8 +63,10 @@ function sesionEnCurso() {
     fi 
 
     # Sumar horas de días anteriores
-    local horasExtra=$(( ${diferencia} / 3600 - ${tiempoEnCurso:0:2} ))
-    read tiempoEnCurso < <(sumaHoras ${tiempoEnCurso} "${horasExtra}:00:00")
+    if (( ${diferencia} >= 3600 * 24 )); then
+      local horasExtra=$(( ${diferencia} / 3600 - ${tiempoEnCurso:0:2} ))
+      read tiempoEnCurso < <(sumaHoras ${tiempoEnCurso} "${horasExtra}:00:00")
+    fi
   fi
 
   echo ${tiempoEnCurso}
