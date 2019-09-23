@@ -5,7 +5,13 @@
 #
 # @author Bruno Valerio
 function ayuda() {
-  echo "Escribir menú ayuda"
+  local helpmenu="
+Este script calcula el tiempo que un usuario ha estado conectado en Antares.
+Este script requiere 2 o 4 argumentos:
+para ejecutar con 2, utilice \"-f\" [nombre del archivo con los usuarios]
+para ejecutar con 4, utilice tambien \"-u\" [nombre del ususario]
+"
+  echo "$helpmenu"
 }
 
 ##

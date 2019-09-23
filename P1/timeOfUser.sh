@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Importar librerías
+# Importar bibliotecas
 source lib/validaciones.sh
 source lib/operaciones.sh
 source lib/util.sh
@@ -30,16 +30,19 @@ while getopts "hu:f:" opcion; do
   esac
 done
 
-# Template de salida
-echo "USUARIO   |  TIEMPO"
 
 # Casos de ejecución
 if [[ -n ${usuario} && -n ${archivo} ]]; then
   read tiemposPorSesion < <(filtrarLogConUsuario ${usuario} ${archivo})
   read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")
+  echo "USUARIO   | TIEMPO"
   imprimeTiempo ${usuario} ${tiempoTotal}
-else
+elif [[ -n ${usuario} ]]; then
+  ayuda
+  exit 2
+else  
   read userArray < <(obtenerUsuarios ${archivo})
+  echo "USUARIO   |  TIEMPO"
   for usuarioAMandar in ${userArray}; do
 	  read tiemposPorSesion < <(filtrarLogConUsuario ${usuarioAMandar} ${archivo})
   	read tiempoTotal < <(tiempoDeConexion "${tiemposPorSesion}")

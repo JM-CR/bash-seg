@@ -8,8 +8,8 @@
 function argumentosValidos() {
   local totalArgs=${1}
   if (( ${totalArgs} == 0 || ${totalArgs} == 3 || ${totalArgs} > 4 )); then
-    echo "Error: Número de argumentos inválido."
-    ayuda
+    echo "Error: Número de argumentos inválido." 
+    ayuda 
     exit 1
   fi
 }
