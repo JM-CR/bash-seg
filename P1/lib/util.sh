@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Libraries
+source lib/validaciones.sh
+source lib/operaciones.sh
+
 ##
 # Muestra menú de ayuda.
 #

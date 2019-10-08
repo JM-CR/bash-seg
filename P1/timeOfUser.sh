@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # Importar bibliotecas
-source lib/validaciones.sh
-source lib/operaciones.sh
 source lib/util.sh
 
 argumentosValidos ${#}
@@ -29,7 +27,6 @@ while getopts "hu:f:" opcion; do
     ;;
   esac
 done
-
 
 # Casos de ejecución
 if [[ -n ${usuario} && -n ${archivo} ]]; then
