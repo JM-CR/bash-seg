@@ -45,8 +45,13 @@ function convierteHora() {
     hora=${hora#"("}
     hora=${hora%")"}
     local dias=$(( ${hora:0:1} * 24 ))
-    dias="${dias}:00:00"
+    if ((dias == 0)); then
+      dias="00:00:00"
+    else
+      dias="${dias}:00:00"
+    fi
     hora="${hora:2:6}:00"
+    hora=${hora#"+"}
     read hora < <(sumaHoras ${dias} ${hora})
   else
     hora=${hora#"("}
