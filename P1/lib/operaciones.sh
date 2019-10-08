@@ -42,14 +42,12 @@ function convierteHora() {
   if [[ ${hora} =~ :[0-9]{2}: ]]; then
     :
   elif [[ ${hora} =~ "+" ]]; then
-    set -x
     hora=${hora#"("}
     hora=${hora%")"}
     local dias=$(( ${hora:0:1} * 24 ))
     dias="${dias}:00:00"
     hora="${hora:2:6}:00"
     read hora < <(sumaHoras ${dias} ${hora})
-    set +x
   else
     hora=${hora#"("}
     hora="${hora%")":00}"
